@@ -1,4 +1,4 @@
 export default {
-    path: '/Center',
+    path: '/center',
     component:() => import('@/views/Center/Center')
 }
