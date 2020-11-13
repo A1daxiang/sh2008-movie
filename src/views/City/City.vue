@@ -1,6 +1,7 @@
 <template>
-    <van-index-bar :index-list="indexList" highlight-color="#ff0000">
   <div  class="scroll" :style="{ height: height + 'px' }">
+    <div>
+    <van-index-bar :index-list="indexList" highlight-color="#ff0000">
         <!--template 伪标签 不能加 :key="index" -->
       <div>
         <template v-for="item in dataList"> 
@@ -17,8 +18,9 @@
         />
       </template>
       </div>
-  </div>
     </van-index-bar>
+  </div>
+  </div>
 </template>
 
 <script>
@@ -44,6 +46,8 @@ export default {
     let ret = await cityListData();
     this.dataList = ret[0];
     this.indexList = ret[1];
+    //获取可视高度
+    this.height = document.documentElement.clientHeight - 50;
   },
   created() {
     //进入的时候去掉底部导航
@@ -85,8 +89,13 @@ export default {
 };
 </script>
 
-<style lang="scss" scoped>
-    // .scroll{
-    //   overflow: hidden;
-    // }
+<style lang="css" scoped>
+    .scroll{
+      overflow: hidden;
+        
+    }
+
+    .van-index-bar{
+          z-index: 200;
+        }
 </style>
