@@ -196,7 +196,7 @@ export default {
       width: 12%;
       display: flex;
       align-items: center;
-      margin-left: 20px;
+      margin-left: 10px;
 
       span {
         border: 1px solid #ff5f16;

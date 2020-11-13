@@ -13,6 +13,7 @@ Vue.config.productionTip = false
 // import axios from 'axios'
 // // 配置域名
 // axios.defaults.baseURL = "https://m.maizuo.com/";
+// //添加请求拦截器
 // axios.interceptors.request.use(function(config){
 //   config.headers = {
 //     "X-Client-Info": '{"a":"3000","ch":"1002","v":"5.0.4","e":"1598087896889693885431809","bc":"110100"}',
@@ -30,7 +31,7 @@ Vue.config.productionTip = false
 // 使用懒加载
 import VueLazyload from 'vue-lazyload';
 Vue.use(VueLazyload, {
-    loading: "https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1602481447727&di=2c09b36305e4f247311cc8e34856cd72&imgtype=0&src=http%3A%2F%2Fcss.chinawj.com.cn%2Fpic%2Fimg.gif",
+    loading: "https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1603346355475&di=5278f3e2df67847d236060d82df77463&imgtype=0&src=http%3A%2F%2Fphotocdn.sohu.com%2F20151110%2Fmp40835393_1447145260195_15.gif",
 });
 
 //定义事件总线

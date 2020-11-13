@@ -37,13 +37,13 @@ export const cinemaTopData = () => {
     return http.get(cinemaTopUrl);
 };
 
-//城市列表诗句
+//城市列表数据
 export const cityListData = async () => {
     http.defaults.headers.info = "city";
     http.defaults.headers.authorization = ''
     let ret = await http.get(cityListUrl); //等一下 拿到数据再往后走
     //定义基本的数据
-    let cities = ret .data.data.cities;
+    let cities = ret.data.data.cities;
     let codeList = [];// 'A','B','C'... (完整26字母)
     let dataList = [];//城市信息
     let indexList = [];//'A','B','C'... (经过筛选的字母)

@@ -11,6 +11,7 @@ import detailRouter from './routes/detail'
 import cityRouter from './routes/city'
 import vuexRouter from './routes/vuex'
 import authRouter from './routes/auth'
+import cnmdetailRouter from './routes/cnmdetail'
 
 const routes = [
   {
@@ -25,6 +26,7 @@ const routes = [
   cityRouter,
   vuexRouter,
   ...authRouter,
+  cnmdetailRouter,
 ]
 
 const router = new VueRouter({

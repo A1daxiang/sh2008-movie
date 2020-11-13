@@ -1,5 +1,6 @@
 <template>
-  <div class="detail">
+  <div class="detail scroll" :style="{ height: height + 'px' }">
+    <div>
     <div class="goBack" @click="goBack()">
       <img
         src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADoAAAA6CAMAAADWZboaAAAAt1BMVEVHcEz///////////////////////////////////////////////////////////////////////////////////97e3saGxyIiYnW1tYdHh9UVVUpKiulpaXLy8s6OzyysrIiIyPx8fEeHyC/v7/5+fklJihCQ0Ntb28bHB1hYWKXl5c0NTZLS0xAQUI4ODk3ODjh4eHr6+s2Nzfq6uptbm5gYGIbHB39/f2VlZdLS0wzNDUZGhs8UYRWAAAAPHRSTlMAGHpLE3cKgEdgVnJfNBZ+cBx9A28js/6sjPvK7p+Q3pn1g/iUgfLYuvzCpeTR2eHiiIXihrvD/YCl0uTUXbEtAAABd0lEQVRIx91W13KDQAw0xnCHARuDe+/dKY7T9f/flTzghCLdMaMXj/eRnZ0T0qqUSveBim96gRWGVuCZfqW4zpCuSMGVRiFhwxEInIY+0qogUFXHHcm6IFGXEa20HaGEY1PKWlNo0KzhylZZaFFuoW8WUP5qkXdtMtrnx4dkzLn/jcgMXY7wlMpVNs+SUs4nMOylvsiME6h6rjawHmfqm/YG6aETzJY5X6V8SykHsJjmvyb9TOVoD/0R5qpElxHKLewOKGHo0tuGThdn/pPsony3A20iHPevMih92MGW9OO1Pj5Gjvqwp63sx1IT4aYLGCi6wIylXp5azuCkaiAvlgY5ZryGzUolDWKplSV6Q5jMlW1rxdIwS7zA8azu+JCWfl+KSRkBM9KEF+fro0BxGJagjPimNyJp/1et/RlNx2l1esC8f2oGDGOscYYpY4RzFgdjXSmW5Fm3JBmrmXMQcM4QzvHDObk4hx7nvGQdtaxTmnXA3zR+AH8JUdNL967cAAAAAElFTkSuQmCC"
@@ -69,8 +70,8 @@
         </Swiper>
       </div>
     </div>
-
-    <a
+  </div>
+  <a
       href="#/film/5109/cinemas"
       class=""
       style="height: 49px; position: fixed; bottom: 0px; width: 100%"
@@ -80,8 +81,10 @@
   </div>
 </template>
 
+
 <script>
 import { movieDetailData } from "@/api/api";
+import BScroll from "better-scroll";
 //引入moment
 import moment from "moment";
 import Swiper from "@/components/Swiper";
@@ -89,11 +92,17 @@ export default {
   data() {
     return {
       film: { actors: [] },
+      height: 0,
+      //bs:用于保存better-scroll的实例结果
+      bs: null,
     };
   },
   async mounted() {
     let ret = await movieDetailData(this.$route.params.filmId);
     this.film = ret.data.data.film;
+
+    //获取可视高度
+    this.height = document.documentElement.clientHeight - 50;
   },
   filters: {
     parsePremiereAt: function (value) {
@@ -112,6 +121,26 @@ export default {
     //发起通知,通知app.vue组件恢复底部菜单
     this.eventBus.$emit("footernav", true);
   },
+  updated() {
+
+    this.bs = new BScroll(".scroll", {
+      pullUpLoad: true,
+      //激活下滑的事件监听
+      pullDownRefresh: true,
+      //默认情况下使用bs后,它会禁止浏览器的点击事件
+      click: true,
+    });
+    this.bs.on("pullingUp", () => {
+      //获取数据
+      this.getData();
+      this.bs.finishPullUp();
+    });
+    this.bs.on("pullingDown", () => {
+      //获取数据
+      this.getData();
+      this.bs.finishPullDown();
+    });
+  },
   methods: {
     goBack: function () {
       this.$router.go(-1);
@@ -122,7 +151,7 @@ export default {
 
 <style lang="scss" scoped>
 .detail {
-    
+    overflow: hidden;
   .goBack {
     height: 30px;
     position: absolute;
@@ -250,9 +279,11 @@ export default {
     }
   }
 
-  .goSchedule {
+ 
+}
+ .goSchedule {
     position: fixed;
-    bottom: 0;
+    bottom: 50px;
     left: 0;
     height: 49px;
     width: 100%;
@@ -262,5 +293,4 @@ export default {
     font-size: 16px;
     line-height: 49px;
   }
-}
 </style>

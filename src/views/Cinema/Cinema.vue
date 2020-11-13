@@ -92,10 +92,10 @@
             :key="index"
         >
             <ul>
-                <li>
+                <li @click="tiao1()">
                     <a class="cinema-item-wrap">
                         <div class="cinema-info">
-                            <span class="cinema-info-if">
+                            <span class="cinema-info-if" >
                                 {{ item.name }}
                             </span>
                             <span class="cinema-address">
@@ -145,6 +145,9 @@ export default {
     methods: {
         tiao(){
             this.$router.push('/city')
+        },
+        tiao1(){
+            this.$router.push('/cnmdetail')
         }
     },
     components: {
